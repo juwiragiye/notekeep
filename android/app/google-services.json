@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "546280525182",
+    "project_id": "janvi-notekeep",
+    "storage_bucket": "janvi-notekeep.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546280525182:android:0276b9cc7606a4e319b72f",
+        "android_client_info": {
+          "package_name": "bi.musumbasteel.notekeep"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "546280525182-tp0d0flnl9hfo876ll9c8qick2cipgk6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwbssrw0rCJS_5HbktHRopXEazKiVcAs0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "546280525182-tp0d0flnl9hfo876ll9c8qick2cipgk6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
