@@ -1,17 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:notekeep/firebase_options.dart';
 
-import '../firebase_options.dart';
-
-class LoginView extends StatefulWidget {
-  const LoginView({Key? key}) : super(key: key);
+class RegisterView extends StatefulWidget {
+  const RegisterView({Key? key}) : super(key: key);
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _RegisterViewState extends State<RegisterView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
 
@@ -33,7 +32,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Login"),
+        title: const Text("Register"),
       ),
       body: Center(
         child: FutureBuilder(
@@ -68,16 +67,20 @@ class _LoginViewState extends State<LoginView> {
                         final password = _password.text;
 
                         try {
-                          final credentials = await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
+                          final userCredentials = await FirebaseAuth.instance
+                              .createUserWithEmailAndPassword(
                                   email: email, password: password);
                         } on FirebaseAuthException catch (e) {
-                          if (e.code == "user-not-found") {
-                            print(e.message);
+                          if (e.code == 'weak-password') {
+                            print("the password is weak");
+                          } else if (e.code == 'email-already-in-use') {
+                            print("the email already in use");
+                          } else if (e.code == 'invalid-email') {
+                            print("invalid email entered!");
                           }
                         }
                       },
-                      child: const Text("Login"),
+                      child: const Text("Register"),
                     ),
                   ],
                 );

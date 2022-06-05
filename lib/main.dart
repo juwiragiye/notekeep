@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:notekeep/firebase_options.dart';
 import 'package:notekeep/views/login_view.dart';
 
 void main() async {
@@ -11,20 +14,35 @@ void main() async {
     darkTheme: FlexThemeData.dark(scheme: FlexScheme.sakura),
     // Use dark or light theme based on system setting.
     themeMode: ThemeMode.system,
-    home: const LoginView(),
+    home: const HomePage(),
   ));
 }
 
-class RegisterView extends StatefulWidget {
-  const RegisterView({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
-  @override
-  State<RegisterView> createState() => _RegisterViewState();
-}
-
-class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Home"),
+      ),
+      body: Center(
+        child: FutureBuilder(
+          future: Firebase.initializeApp(
+            options: DefaultFirebaseOptions.currentPlatform,
+          ),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.done:
+                print(FirebaseAuth.instance.currentUser);
+                return const Text("DONE");
+              default:
+                return const Text('Loading.....');
+            }
+          },
+        ),
+      ),
+    );
   }
 }
