@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:notekeep/firebase_options.dart';
-import 'package:notekeep/views/login_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,13 +34,42 @@ class HomePage extends StatelessWidget {
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
-                print(FirebaseAuth.instance.currentUser);
-                return const Text("DONE");
+                final user = FirebaseAuth.instance.currentUser;
+                if (user?.emailVerified ?? false) {
+                  return const Text("Done");
+                } else {
+                  print("You need to verify your email");
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const VerfifyEmailView(),
+                    ),
+                  );
+                }
+                return const Text("Done");
+
               default:
                 return const Text('Loading.....');
             }
           },
         ),
+      ),
+    );
+  }
+}
+
+class VerfifyEmailView extends StatefulWidget {
+  const VerfifyEmailView({Key? key}) : super(key: key);
+
+  @override
+  State<VerfifyEmailView> createState() => _VerfifyEmailViewState();
+}
+
+class _VerfifyEmailViewState extends State<VerfifyEmailView> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Verfify Email"),
       ),
     );
   }
